@@ -1,4 +1,3 @@
-# FILE: /products-app-python/products-app-python/README.md
 
 # Products App Python
 
