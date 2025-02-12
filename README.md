@@ -50,6 +50,15 @@ products-app-python
    ```
    python app/main.py
    ```
+5. Create a new git repo and push the changes to your github.
+
+```
+git init
+git add .
+git commit -m "{python demo flask app}"
+gh repo create {ex: github-copilot-demo} --public --source=. --remote=origin
+git push -u origin main
+```
 
 ## Usage
 
@@ -68,6 +77,7 @@ To run the unit tests, use the following command:
 ```
 pytest tests/
 ```
+
 
 ## License
 
