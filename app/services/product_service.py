@@ -1,35 +1,39 @@
 from app.models.product import Product
-from app.database.db import db
 
 class ProductService:
-    @staticmethod
-    def create_product(data):
-        new_product = Product(**data)
-        db.session.add(new_product)
-        db.session.commit()
+    def __init__(self, db):
+        self.db = db
+
+    def create_product(self, data):
+        new_product = Product(
+            name=data['name'],
+            description=data.get('description'),
+            price=data['price'],
+            quantity=data['quantity']
+        )
+        self.db.session.add(new_product)
+        self.db.session.commit()
         return new_product
 
-    @staticmethod
-    def get_product(product_id):
+    def get_all_products(self):
+        return Product.query.all()
+
+    def get_product_by_id(self, product_id):
         return Product.query.get(product_id)
 
-    @staticmethod
-    def update_product(product_id, data):
+    def update_product(self, product_id, data):
         product = Product.query.get(product_id)
         if product:
-            for key, value in data.items():
-                setattr(product, key, value)
-            db.session.commit()
+            product.name = data['name']
+            product.description = data.get('description')
+            product.price = data['price']
+            product.quantity = data['quantity']
+            self.db.session.commit()
         return product
 
-    @staticmethod
-    def delete_product(product_id):
+    def delete_product(self, product_id):
         product = Product.query.get(product_id)
         if product:
-            db.session.delete(product)
-            db.session.commit()
+            self.db.session.delete(product)
+            self.db.session.commit()
         return product
-
-    @staticmethod
-    def get_all_products():
-        return Product.query.all()

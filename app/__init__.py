@@ -1,9 +1,11 @@
 from flask import Flask
-from .database.db import init_db
-from .routes.product_routes import product_routes
+from app.database.db import init_db
+from app.routes.product_routes import product_routes
 
 def create_app():
     app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Initialize the database
     init_db(app)
